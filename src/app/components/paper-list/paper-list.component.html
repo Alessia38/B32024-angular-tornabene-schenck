@@ -1,0 +1,6 @@
+<p>paper-list works!</p>
+<ul>
+    @for (paper of papers; track $index){
+    <li (click)="onPaperClic(paper)" [ngClass]="{'selected': paper === selectedPaper}">{{ paper.id}} {{ paper.grammage}} {{ paper.color}} {{ paper.texture}} {{ paper.name }}</li>
+    }
+</ul>
