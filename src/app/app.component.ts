@@ -34,6 +34,7 @@ export class AppComponent {
     if (this.selectedPaper) {
       const index = this.papers.findIndex((p) => p.id === this.selectedPaper?.id);
       if (index !== -1) {
+        updatedPaper.id = this.selectedPaper.id;
         this.papers[index] = updatedPaper;
       }
     } else {

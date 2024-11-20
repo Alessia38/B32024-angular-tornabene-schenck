@@ -30,6 +30,7 @@ export class PaperFormComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedPaper'] && this.selectedPaper != null) {
       this.paperForm.setValue({
+        id : this.selectedPaper.id,
         name: this.selectedPaper.name,
         texture: this.selectedPaper.texture,
         weight: this.selectedPaper.grammage,
