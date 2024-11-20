@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Paper } from './models/paper';
 import { PaperTitleComponent } from "./components/paper-title/paper-title.component";
 import { PaperListComponent } from "./components/paper-list/paper-list.component";
+import { PaperFormComponent } from "./components/paper-form/paper-form.component";
 
 
  
@@ -9,7 +10,7 @@ import { PaperListComponent } from "./components/paper-list/paper-list.component
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [PaperTitleComponent, PaperListComponent],
+  imports: [PaperTitleComponent, PaperListComponent, PaperFormComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -25,9 +26,29 @@ export class AppComponent {
     this.selectedPaper = $event;
   }
 
-  public onSubmit(paper: Paper){
-    this.papers.push(paper);
+  onPaperSelected(paper: Paper) {
     this.selectedPaper = paper;
+  }
+
+  onSavePaper(updatedPaper: Paper) {
+    if (this.selectedPaper) {
+      const index = this.papers.findIndex((p) => p.id === this.selectedPaper?.id);
+      if (index !== -1) {
+        this.papers[index] = updatedPaper;
+      }
+    } else {
+      if (this.papers.length > 0) {
+        const lastPaperId = this.papers[this.papers.length - 1].id;
+        updatedPaper.id = lastPaperId + 1;
+      } else {
+        updatedPaper.id = 1;
+      }
+      this.papers.push(updatedPaper);
+    }
+  }
+
+  onCancelEdit() {
+    this.selectedPaper = undefined;
   }
 }
 

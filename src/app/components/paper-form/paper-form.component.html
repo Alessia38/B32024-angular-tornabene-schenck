@@ -1,0 +1,17 @@
+<p>-----</p>
+<form [formGroup]="paperForm" (ngSubmit)="onSubmit()">
+    <label for="name">Nom :</label>
+    <input id="name" formControlName="name">
+    
+    <label for="texture">Texture :</label>
+    <input id="texture" formControlName="texture">
+    
+    <label for="weight">Grammage :</label>
+    <input id="weight" formControlName="grammage">
+    
+    <label for="color">Couleur :</label>
+    <input id="color" formControlName="color">
+    
+    <button type="submit" [disabled]="paperForm.invalid">Valider</button>
+    <button type="button" (click)="onCancel()">Annuler</button>
+  </form>

@@ -1,6 +1,7 @@
-<div>
-  Ta mère Angular
-</div>
 <app-paper-title [actualPaper]="selectedPaper"></app-paper-title>
 <br>
 <app-paper-list [papers]="papers" (clickPaper)="onSelectPaper($event)"></app-paper-list>
+<br>
+<app-paper-form [selectedPaper]="selectedPaper"
+(savePaper)="onSavePaper($event)"
+(cancelEdit)="onCancelEdit()"></app-paper-form>
