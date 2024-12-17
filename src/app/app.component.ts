@@ -3,14 +3,13 @@ import { Paper } from './models/paper';
 import { PaperTitleComponent } from "./components/paper-title/paper-title.component";
 import { PaperListComponent } from "./components/paper-list/paper-list.component";
 import { PaperFormComponent } from "./components/paper-form/paper-form.component";
+import { PaperDetailComponent } from "./components/paper-detail/paper-detail.component";
 
-
- 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [PaperTitleComponent, PaperListComponent, PaperFormComponent],
+  imports: [PaperTitleComponent, PaperListComponent, PaperFormComponent, PaperDetailComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
