@@ -1,0 +1,36 @@
+<p>-----</p>
+<button (click)="onNew()">New</button>
+<form [formGroup]="paperForm" (ngSubmit)="onSubmit()">
+    <label for="name">Nom :</label>
+    <input id="name" formControlName="name" placeholder="Papier x">
+    @if (showFieldError("name", "required")){
+      <p class="fielderror">Le champ est requis, on ne laisse pas bébé tout seul.</p>
+    } @else if (showFieldError("name")){
+      <p>20 caractère max, mon chou!</p>
+    }
+
+    <label for="texture">Texture :</label>
+    <input id="texture" formControlName="texture" placeholder="Granuleux">
+    @if (showFieldError("texture", "required")){
+      <p class="fielderror">Le champ est requis, on ne laisse pas bébé tout seul.</p>
+    } @else if (showFieldError("texture")){
+      <p>10 caractère max, mon chou!</p>
+    }
+
+    <label for="grammage">Grammage :</label>
+    <input id="grammage" formControlName="grammage" placeholder="Xxgr">
+    @if (showFieldError("grammage", "required")){
+      <p class="fielderror">Le champ est requis, on ne laisse pas bébé tout seul.</p>
+    } @else if (showFieldError("grammage")){
+      <p>Pas d'espace avant gr, tout le monde en rang d'oignon!</p>
+    }
+
+    <label for="color">Couleur :</label>
+    <input id="color" formControlName="color" placeholder="Irisé">
+    @if (showFieldError("color", "required")){
+      <p class="fielderror">Le champ est requis, on ne laisse pas bébé tout seul.</p>
+    }
+
+    <button type="submit" [disabled]="paperForm.invalid">Valider</button>
+    <button type="button" (click)="onCancel()">Annuler</button>
+  </form>
