@@ -1,4 +1,4 @@
-import { Component, Input, output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectorRef  } from '@angular/core';
 import { Paper } from '../../models/paper';
 import { CommonModule } from '@angular/common';
 
@@ -11,12 +11,18 @@ import { CommonModule } from '@angular/common';
 })
 export class PaperListComponent {
 
-  @Input() papers : Paper[] = [];
+  @Input() papers: Paper[] = [];
+  @Output() clickPaper = new EventEmitter<Paper>();
+
   selectedPaper : any = null;
-  clickPaper = output<Paper>();
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   onPaperClic(current: Paper){
+    console.log('Clicked paper:', current);
     this.clickPaper.emit(current);
     this.selectedPaper = current;
+
+    this.cdr.detectChanges();
   }
 }

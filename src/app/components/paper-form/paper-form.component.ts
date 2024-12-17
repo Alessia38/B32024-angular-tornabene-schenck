@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { Paper } from '../../models/paper';
-import { FormControl, FormGroup, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -22,9 +22,7 @@ export class PaperFormComponent implements OnChanges {
     this.paperForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       texture: new FormControl('', [Validators.required, Validators.maxLength(10)]),
-      grammage: new FormControl('', [ 
-        Validators.required, 
-        Validators.pattern(/^\d+gr$/)
+      grammage: new FormControl('', [ Validators.required, Validators.pattern(/^\d+gr$/)
         // Regex pour valider "20gr", "250gr", etc. ne pas mettre d'espace
       ]),
       color: new FormControl('', Validators.required),
@@ -38,10 +36,9 @@ export class PaperFormComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedPaper'] && this.selectedPaper != null) {
       this.paperForm.setValue({
-        id : this.selectedPaper.id,
         name: this.selectedPaper.name,
         texture: this.selectedPaper.texture,
-        weight: this.selectedPaper.grammage,
+        grammage: this.selectedPaper.grammage,
         color: this.selectedPaper.color,
       });
     }

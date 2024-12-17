@@ -1,7 +1,10 @@
 <ul>
-    @for (paper of papers; track $index){
-    <li (click)="onPaperClic(paper)" [ngClass]="{'selected': paper === selectedPaper}">
+    @for (paper of papers; track paper.id) {
+      <li 
+        (click)="onPaperClic(paper)" 
+        [ngClass]="{'selected': paper === selectedPaper}">
         {{ paper.name }}
-    </li>
+      </li>
     }
-</ul>
+  </ul>
+  

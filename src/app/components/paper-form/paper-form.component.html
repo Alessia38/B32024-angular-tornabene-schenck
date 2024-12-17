@@ -1,5 +1,3 @@
-<button (click)="onNew()">Clean</button>
-
 <form [formGroup]="paperForm" (ngSubmit)="onSubmit()">
     <label for="name">Nom :</label>
     <input id="name" formControlName="name" placeholder="Papier x">
@@ -31,6 +29,7 @@
       <p class="fielderror">Le champ est requis, on ne laisse pas bébé tout seul.</p>
     }
 
-    <button type="submit" [disabled]="paperForm.invalid">Valider</button>
+    <button type="bt" [disabled]="paperForm.invalid">Valider</button>
+    <button (click)="onNew()">Nettoyer</button>
     <button type="button" (click)="onCancel()">Annuler</button>
   </form>

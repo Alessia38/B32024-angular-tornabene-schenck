@@ -1,8 +1,9 @@
 <app-paper-title [actualPaper]="selectedPaper"></app-paper-title>
 <br>
-<app-paper-list [papers]="papers" (clickPaper)="onSelectPaper($event)"></app-paper-list>
+<app-paper-list [papers]="papers" (clickPaper)="onPaperSelected($event)"></app-paper-list>
 <br>
 <app-paper-detail [actualPaper]="selectedPaper"></app-paper-detail>
+
 <app-paper-form [selectedPaper]="selectedPaper"
 (savePaper)="onSavePaper($event)"
 (cancelEdit)="onCancelEdit()"></app-paper-form>
