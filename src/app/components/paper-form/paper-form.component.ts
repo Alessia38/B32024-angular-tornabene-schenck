@@ -30,7 +30,7 @@ export class PaperFormComponent implements OnChanges {
       color: new FormControl('', Validators.required),
     });
   }
-  public onNew(){
+  public onNew(): void {
     // reset des valeurs du formulaire
     this.paperForm.reset();
   }
@@ -47,14 +47,14 @@ export class PaperFormComponent implements OnChanges {
     }
   }
 
-  public onSubmit() {
+  public onSubmit(): void {
     if (this.paperForm.valid) {
       const updatedPaper: Paper = this.paperForm.value;
       this.savePaper.emit(updatedPaper);
     }
   }
 
-  public onCancel() {
+  public onCancel(): void {
     this.cancelEdit.emit();
   }
 
@@ -70,7 +70,7 @@ export class PaperFormComponent implements OnChanges {
     }
   }
   
-  public getError(fieldName: string){
+  public getError(fieldName: string): any{
     return this.paperForm.get(fieldName)?.errors;
   }
 }

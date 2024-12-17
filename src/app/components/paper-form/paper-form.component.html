@@ -1,12 +1,12 @@
-<p>-----</p>
 <button (click)="onNew()">New</button>
+
 <form [formGroup]="paperForm" (ngSubmit)="onSubmit()">
     <label for="name">Nom :</label>
     <input id="name" formControlName="name" placeholder="Papier x">
     @if (showFieldError("name", "required")){
       <p class="fielderror">Le champ est requis, on ne laisse pas bébé tout seul.</p>
     } @else if (showFieldError("name")){
-      <p>20 caractère max, mon chou!</p>
+      <p class="fielderror">20 caractère max, mon chou!</p>
     }
 
     <label for="texture">Texture :</label>
@@ -14,7 +14,7 @@
     @if (showFieldError("texture", "required")){
       <p class="fielderror">Le champ est requis, on ne laisse pas bébé tout seul.</p>
     } @else if (showFieldError("texture")){
-      <p>10 caractère max, mon chou!</p>
+      <p class="fielderror">10 caractère max, mon chou!</p>
     }
 
     <label for="grammage">Grammage :</label>
@@ -22,7 +22,7 @@
     @if (showFieldError("grammage", "required")){
       <p class="fielderror">Le champ est requis, on ne laisse pas bébé tout seul.</p>
     } @else if (showFieldError("grammage")){
-      <p>Pas d'espace avant gr, tout le monde en rang d'oignon!</p>
+      <p class="fielderror">Des chiffres et pas d'espace avant gr, tout le monde en rang d'oignon!</p>
     }
 
     <label for="color">Couleur :</label>

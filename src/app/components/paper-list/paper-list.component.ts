@@ -1,4 +1,4 @@
-import { Component, Input, output, Output,EventEmitter } from '@angular/core';
+import { Component, Input, output, EventEmitter } from '@angular/core';
 import { Paper } from '../../models/paper';
 import { CommonModule } from '@angular/common';
 

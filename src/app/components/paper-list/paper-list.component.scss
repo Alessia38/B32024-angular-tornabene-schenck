@@ -1,4 +1,35 @@
+/* Liste de papiers */
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Effet de survol */
+li:hover {
+  background-color: #e6f7ff;
+  transform: scale(1.02);
+}
+
+/* Élément sélectionné */
 .selected {
-    font-weight: bold;
-    color: blue;
-  }
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+/* Ajustement des polices et espacements */
+li {
+  font-size: 1.1rem;
+  color: #333;
+}
