@@ -46,6 +46,7 @@ import { BehaviorSubject, switchMap } from 'rxjs';
   
     onSavePaper(updatedPaper: Paper): void {
       if (this.selectedPaper) {
+        // if (this.selectedPaper.id >0) {
       this._panamaPaperService.put(updatedPaper).subscribe(
         (updated) => {
           console.log('Papier mis à jour', updated);
@@ -66,7 +67,7 @@ import { BehaviorSubject, switchMap } from 'rxjs';
           }
         );
       }
-      
+      // }
       this.selectedPaper = updatedPaper; 
     }
     

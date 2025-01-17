@@ -28,9 +28,10 @@
     @if (showFieldError("color", "required")){
       <p class="fielderror">Le champ est requis, on ne laisse pas bébé tout seul.</p>
     }
-
-    <button type="bt" [disabled]="paperForm.invalid">Valider</button>
     <button (click)="onNew()">Nettoyer</button>
     <button type="button" (click)="onCancel()">Annuler</button>
-    <button type="btn" (click)="onDelete()">Supprimer</button>
+    <button type="submit" [disabled]="paperForm.invalid">Valider</button>
+    <button type="button" (click)="onDelete()">Supprimer</button>
+
+
   </form>
