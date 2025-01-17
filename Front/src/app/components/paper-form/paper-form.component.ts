@@ -20,6 +20,7 @@ export class PaperFormComponent implements OnChanges {
 
   constructor() {
     this.paperForm = new FormGroup({
+      id: new FormControl(),
       name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       texture: new FormControl('', [Validators.required, Validators.maxLength(10)]),
       grammage: new FormControl('', [ Validators.required, Validators.pattern(/^\d+gr$/)
@@ -36,6 +37,7 @@ export class PaperFormComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedPaper'] && this.selectedPaper != null) {
       this.paperForm.setValue({
+        id: this.selectedPaper.id,
         name: this.selectedPaper.name,
         texture: this.selectedPaper.texture,
         grammage: this.selectedPaper.grammage,
