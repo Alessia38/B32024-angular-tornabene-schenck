@@ -15,54 +15,69 @@ import { BehaviorSubject, switchMap } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+  
+  export class AppComponent {
  
-  public papers: Paper[] = [
+    public papers: Paper[] = [
     {id:1 , name:"Papier 1 " ,texture:"Lisse" , grammage:"80gr" , color:"blanc" },
     {id:2 , name:"Papier 2" ,texture:"Grain fin" , grammage:"120gr" , color:"écru" }
   ];
-  public selectedPaper: Paper | undefined;
-  private _myRefreshObservable = new BehaviorSubject<number>(1);
-
-  constructor(private _panamaPaperService: PanamaPaperService) {
-    this._myRefreshObservable
-    .pipe(
-      switchMap(()=> {
-        return this._panamaPaperService.get();
-      }),
-    ).subscribe((value)=>{
-      this.papers = value
-    });
-  }
+    public selectedPaper: Paper | undefined;
+    private _myRefreshObservable = new BehaviorSubject<number>(1);
   
-  onSelectPaper($event: Paper) {
-    this.selectedPaper = $event;
-  }
-
-  onPaperSelected(paper: Paper) {
-    this.selectedPaper = paper;
-  }
-
-  onSavePaper(updatedPaper: Paper) {
-    if (this.selectedPaper) {
-      const index = this.papers.findIndex((p) => p.id === this.selectedPaper?.id);
-      if (index !== -1) {
-        updatedPaper.id = this.selectedPaper.id;
-        this.papers[index] = updatedPaper;
-      }
-    } else {
-      if (this.papers.length > 0) {
-        const lastPaperId = this.papers[this.papers.length - 1].id;
-        updatedPaper.id = lastPaperId + 1;
-      } else {
-        updatedPaper.id = 1;
-      }
-      this.papers.push(updatedPaper);
+    constructor(private _panamaPaperService: PanamaPaperService) {
+      this._myRefreshObservable
+      .pipe(
+        switchMap(()=> {
+          return this._panamaPaperService.get();
+        }),
+      ).subscribe((value)=>{
+        this.papers = value
+      });
     }
+    
+    onSelectPaper($event: Paper) {
+      this.selectedPaper = $event;
+    }
+  
+    onPaperSelected(paper: Paper) {
+      this.selectedPaper = paper;
+    }
+  
+    onSavePaper(updatedPaper: Paper): void {
+      if (this.selectedPaper) {
+      this._panamaPaperService.put(updatedPaper).subscribe(
+        (updated) => {
+          console.log('Papier mis à jour', updated);
+          this.onRefreshList(); // Rafraîchir la liste après mise à jour
+        },
+        (error) => {
+          console.error('Erreur lors de la mise à jour du papier', error);
+        }
+      );
+      } else {
+        this._panamaPaperService.add(updatedPaper).subscribe(
+          (added) => {
+            console.log('Nouveau papier ajouté', added);
+            this.onRefreshList(); // Rafraîchir la liste après ajout
+          },
+          (error) => {
+            console.error('Erreur lors de l\'ajout du papier', error);
+          }
+        );
+      }
+  
+      this.selectedPaper = updatedPaper; 
+    }
+    
+      onRefreshList(): void {
+        this._panamaPaperService.get().subscribe(
+          (data: Paper[]) => {
+            this.papers = data; // Mettre à jour la liste des papiers
+          },
+          (error) => {
+            console.error('Erreur lors du rafraîchissement de la liste des papiers', error);
+          }
+        );
+      }
   }
-
-  onCancelEdit() {
-    this.selectedPaper = undefined;
-  }
-}
-

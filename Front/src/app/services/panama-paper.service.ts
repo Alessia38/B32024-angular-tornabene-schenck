@@ -1,25 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Paper } from '../models/paper';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators'; // Import catchError pour gérer les erreurs
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PanamaPaperService {
+  
+  private apiUrl = '/api/paper'; // Définir l'URL de l'API
 
-  public constructor(private _httpClient: HttpClient){
+  constructor(private _httpClient: HttpClient) {}
+
+  // Récupérer tous les papiers
+  public get(): Observable<Paper[]> {
+    return this._httpClient.get<Paper[]>(this.apiUrl).pipe(
+      catchError(this.handleError) // Gérer les erreurs
+    );
   }
 
-  public get(){
-    return this._httpClient.get<Paper[]>('/api/paper');
+  // Ajouter un papier
+  public add(panamaPaper: Paper): Observable<Paper> {
+    return this._httpClient.post<Paper>(this.apiUrl, panamaPaper).pipe(
+      catchError(this.handleError) // Gérer les erreurs
+    );
   }
 
-  public add(panamaPaper: Paper){
-    return this._httpClient.post('/api/paper', panamaPaper);
+  // Mettre à jour un papier
+  public put(panamaPaper: Paper): Observable<Paper> {
+    return this._httpClient.put<Paper>(`${this.apiUrl}/${panamaPaper.id}`, panamaPaper).pipe(
+      catchError(this.handleError) // Gérer les erreurs
+    );
   }
 
-  public put(panamaPaper: Paper){
-    return this._httpClient.put('/api/paper/' + panamaPaper.id, panamaPaper);
+  // Méthode pour gérer les erreurs
+  private handleError(error: any): Observable<never> {
+    console.error('Une erreur est survenue', error);
+    throw error; // Ou tu peux retourner un message d'erreur personnalisé
   }
-
 }
