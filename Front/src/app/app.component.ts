@@ -4,6 +4,8 @@ import { PaperTitleComponent } from "./components/paper-title/paper-title.compon
 import { PaperListComponent } from "./components/paper-list/paper-list.component";
 import { PaperFormComponent } from "./components/paper-form/paper-form.component";
 import { PaperDetailComponent } from "./components/paper-detail/paper-detail.component";
+import { PanamaPaperService } from './services/panama-paper.service';
+import { BehaviorSubject, switchMap } from 'rxjs';
 
 
 @Component({
@@ -20,7 +22,19 @@ export class AppComponent {
     {id:2 , name:"Papier 2" ,texture:"Grain fin" , grammage:"120gr" , color:"écru" }
   ];
   public selectedPaper: Paper | undefined;
+  private _myRefreshObservable = new BehaviorSubject<number>(1);
 
+  constructor(private _panamaPaperService: PanamaPaperService) {
+    this._myRefreshObservable
+    .pipe(
+      switchMap(()=> {
+        return this._panamaPaperService.get();
+      }),
+    ).subscribe((value)=>{
+      this.papers = value
+    });
+  }
+  
   onSelectPaper($event: Paper) {
     this.selectedPaper = $event;
   }
