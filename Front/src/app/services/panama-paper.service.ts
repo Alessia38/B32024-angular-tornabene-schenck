@@ -34,6 +34,13 @@ export class PanamaPaperService {
     );
   }
 
+  // Supprimer un papier par son ID
+  public delete(id: number): Observable<void> {
+    return this._httpClient.delete<void>(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError) // Gérer les erreurs
+    );
+  }
+
   // Méthode pour gérer les erreurs
   private handleError(error: any): Observable<never> {
     console.error('Une erreur est survenue', error);

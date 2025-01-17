@@ -66,7 +66,7 @@ import { BehaviorSubject, switchMap } from 'rxjs';
           }
         );
       }
-  
+      
       this.selectedPaper = updatedPaper; 
     }
     
@@ -79,5 +79,19 @@ import { BehaviorSubject, switchMap } from 'rxjs';
             console.error('Erreur lors du rafraîchissement de la liste des papiers', error);
           }
         );
+      }
+
+      public onDeletePaper(id: number): void {
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce papier ?")) {
+          this._panamaPaperService.delete(id).subscribe(
+            () => {
+              console.log(`Papier avec l'ID ${id} supprimé`);
+              this.onRefreshList(); // Rafraîchir la liste après suppression
+            },
+            (error) => {
+              console.error("Erreur lors de la suppression du papier", error);
+            }
+          );
+        }
       }
   }

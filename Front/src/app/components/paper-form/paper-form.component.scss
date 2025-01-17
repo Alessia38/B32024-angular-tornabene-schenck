@@ -79,3 +79,11 @@ form {
     background-color: #60d32f;
   }
   
+  button[type="btn"] {
+    background-color: #ed8712;
+    margin-top: 10px;
+  }
+  
+  button[type="btn"]:hover {
+    background-color: #cc7707;
+  }

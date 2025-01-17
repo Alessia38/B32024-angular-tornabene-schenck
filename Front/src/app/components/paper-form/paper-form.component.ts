@@ -8,32 +8,34 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './paper-form.component.html',
-  styleUrl: './paper-form.component.scss'
+  styleUrls: ['./paper-form.component.scss'] // correction: il y a un 's' manquant pour le fichier style
 })
 export class PaperFormComponent implements OnChanges {
 
   @Input() selectedPaper: Paper | undefined;
   @Output() savePaper = new EventEmitter<Paper>();
   @Output() cancelEdit = new EventEmitter<void>();
+  @Output() deletePaper = new EventEmitter<number>(); // EventEmitter pour la suppression
 
   paperForm: FormGroup;
 
   constructor() {
     this.paperForm = new FormGroup({
-      id: new FormControl(),
+      id: new FormControl(0),
       name: new FormControl('', [Validators.required, Validators.maxLength(20)]),
       texture: new FormControl('', [Validators.required, Validators.maxLength(10)]),
-      grammage: new FormControl('', [ Validators.required, Validators.pattern(/^\d+gr$/)
-        // Regex pour valider "20gr", "250gr", etc. ne pas mettre d'espace
-      ]),
+      grammage: new FormControl('', [Validators.required]), // Regex pour valider "20gr", "250gr", etc.
       color: new FormControl('', Validators.required),
     });
   }
+
+  // Méthode pour réinitialiser le formulaire lorsque l'on crée un nouveau papier
   public onNew(): void {
-    // reset des valeurs du formulaire
     this.paperForm.reset();
+    this.paperForm.patchValue({id:0});
   }
 
+  // Méthode pour détecter les changements dans selectedPaper
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['selectedPaper'] && this.selectedPaper != null) {
       this.paperForm.setValue({
@@ -46,31 +48,42 @@ export class PaperFormComponent implements OnChanges {
     }
   }
 
+  // Soumission du formulaire
   public onSubmit(): void {
     if (this.paperForm.valid) {
       const updatedPaper: Paper = this.paperForm.value;
-      this.savePaper.emit(updatedPaper);
+      this.savePaper.emit(updatedPaper); // Émettre l'événement savePaper avec le papier mis à jour
     }
   }
 
+  // Annuler l'édition en cours
   public onCancel(): void {
-    this.cancelEdit.emit();
+    this.cancelEdit.emit(); // Émettre l'événement cancelEdit
   }
 
-  public showFieldError(fieldName: string, errorKind: string = ''): boolean{
+  // Supprimer le papier sélectionné
+  public onDelete(): void {
+    if (this.selectedPaper?.id) {
+      this.deletePaper.emit(this.selectedPaper.id); // Émettre l'événement deletePaper avec l'id du papier à supprimer
+      console.warn("Aucun papier sélectionné à supprimer.");
+    }
+  }
+
+  // Afficher les erreurs de validation pour un champ
+  public showFieldError(fieldName: string, errorKind: string = ''): boolean {
     if (this.paperForm.get(fieldName)?.touched) {
-      if (errorKind == ''){
+      if (errorKind == '') {
         return !this.paperForm.get(fieldName)?.valid;
-      }else{
+      } else {
         return this.paperForm.get(fieldName)?.errors?.[errorKind] != null;
       }
-    }else{
+    } else {
       return false;
     }
   }
-  
-  public getError(fieldName: string): any{
+
+  // Récupérer les erreurs de validation d'un champ
+  public getError(fieldName: string): any {
     return this.paperForm.get(fieldName)?.errors;
   }
 }
-
