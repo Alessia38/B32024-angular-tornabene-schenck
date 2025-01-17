@@ -1,6 +1,6 @@
 ﻿namespace Paper.Api.Models
 {
-    public class Paper
+    public class PaperModel
     {
         public int Id { get; set; }
         public string Name { get; set; } = "" ;
