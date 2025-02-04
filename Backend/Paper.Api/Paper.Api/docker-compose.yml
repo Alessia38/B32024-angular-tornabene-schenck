@@ -1,0 +1,10 @@
+﻿services:
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: paperapi
+    ports:
+      - "9080:8080"  # Assure-toi que ton app écoute bien sur ce port
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
