@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: paperfront
+    ports:
+      - "9082:80"  # Assure-toi que ton app écoute bien sur ce port
+
