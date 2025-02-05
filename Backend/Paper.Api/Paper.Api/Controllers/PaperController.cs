@@ -14,7 +14,7 @@ namespace Paper.Api.Controllers
             new PaperModel { Id = 1, Name = "Papier 1", Texture = "Lisse", Grammage = "80gr", Color = "blanc" },
             new PaperModel { Id = 2, Name = "Papier 2", Texture = "Grain fin", Grammage = "120gr", Color = "écru" },
         };
-        private static int MaxId = 2;
+        
         [HttpGet()]
         public ActionResult<List<PaperModel>> Get()
         {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Paper } from './models/paper';
 import { PaperTitleComponent } from "./components/paper-title/paper-title.component";
 import { PaperListComponent } from "./components/paper-list/paper-list.component";
@@ -6,6 +6,7 @@ import { PaperFormComponent } from "./components/paper-form/paper-form.component
 import { PaperDetailComponent } from "./components/paper-detail/paper-detail.component";
 import { PanamaPaperService } from './services/panama-paper.service';
 import { BehaviorSubject, switchMap } from 'rxjs';
+import { OidcSecurityService, LoginResponse } from 'angular-auth-oidc-client';
 
 
 @Component({
@@ -17,11 +18,21 @@ import { BehaviorSubject, switchMap } from 'rxjs';
 })
   
   export class AppComponent {
- 
-    public papers: Paper[] = [
-    {id:1 , name:"Papier 1 " ,texture:"Lisse" , grammage:"80gr" , color:"blanc" },
-    {id:2 , name:"Papier 2" ,texture:"Grain fin" , grammage:"120gr" , color:"écru" }
-  ];
+    private readonly oidcSecurityService = inject(OidcSecurityService);
+
+    ngOnInit() {
+      this.oidcSecurityService
+        .checkAuth()
+        .subscribe((loginResponse: LoginResponse) => {
+          const { isAuthenticated, userData, accessToken, idToken, configId } =
+            loginResponse;
+  
+          /*...*/
+        });
+    }
+
+
+    public papers: Paper[] = [];
     public selectedPaper: Paper | undefined;
     private _myRefreshObservable = new BehaviorSubject<number>(1);
   
@@ -34,6 +45,9 @@ import { BehaviorSubject, switchMap } from 'rxjs';
       ).subscribe((value)=>{
         this.papers = value
       });
+    }
+    onLogin(){
+      this.oidcSecurityService.authorize();
     }
     
     onSelectPaper($event: Paper) {

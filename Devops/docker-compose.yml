@@ -15,8 +15,6 @@ services:
     build:
       context: ../Backend/Paper.Api/Paper.Api
       dockerfile: Dockerfile
-    ports:
-    - 91:80
     networks:
     - tp
 
@@ -24,8 +22,6 @@ services:
     build:
       context: ../Front
       dockerfile: Dockerfile
-    ports:
-    - 92:80
     networks:
     - tp
 

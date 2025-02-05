@@ -4,6 +4,16 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: paperfront
-    ports:
-      - "9082:80"  # Assure-toi que ton app écoute bien sur ce port
+    # ports:
+    #   - "9082:80"  # Assure-toi que ton app écoute bien sur ce port
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.1.1
+    environment:
+      KEYCLOAK_LOG_LEVEL: DEBUG
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_PROXY: edge
+      KC_HOSTNAME_STRICT: false
+    command:
+      - start-dev
