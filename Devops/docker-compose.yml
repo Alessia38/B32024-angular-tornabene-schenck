@@ -10,7 +10,7 @@ services:
       MYSQL_USER: root                   # Nom de l'utilisateur
       MYSQL_PASSWORD: root               # Mot de passe de l'utilisateur
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - db_data:/var/lib/mysql
     networks:
