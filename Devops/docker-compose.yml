@@ -52,13 +52,6 @@ services:
 
 volumes:
   db_data:
-<<<<<<< HEAD
-  nginx:
-
-networks:
-  tp:
-    driver: bridge
-=======
     # Ce volume contient les données de la base de données MySQL
   nginx:
     # Ce volume est utilisé pour stocker les fichiers de configuration Nginx et les logs
@@ -66,4 +59,3 @@ networks:
 networks:
   tp:
     driver: bridge
->>>>>>> e8a3f726c604dd0665c47567ee6e65e05c81957a
