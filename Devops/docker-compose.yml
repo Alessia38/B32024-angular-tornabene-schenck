@@ -1,4 +1,21 @@
 services:
+  db:
+    image: mysql:8.0
+    container_name: paperstack_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password # Remplace par un mot de passe sécurisé
+      MYSQL_DATABASE: paperstack         # Nom de la base de données
+      MYSQL_USER: root                   # Nom de l'utilisateur
+      MYSQL_PASSWORD: root      # Mot de passe de l'utilisateur
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - tp
+
+volumes:
+  db_data:
   nginx:
     image: nginx
     container_name: paperstack
@@ -15,15 +32,23 @@ services:
     build:
       context: ../Backend/Paper.Api/Paper.Api
       dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME: paperstack
+      DB_USER: root
+      DB_PASSWORD: root
     networks:
-    - tp
+      - tp
+    depends_on:
+      - db
 
   app:
     build:
       context: ../Front
       dockerfile: Dockerfile
     networks:
-    - tp
+      - tp
 
 networks:
   tp:  # Déclaration du réseau 'tp'
